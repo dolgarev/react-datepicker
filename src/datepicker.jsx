@@ -90,13 +90,17 @@ var DatePicker = React.createClass({
     }
   },
 
+  handleMouseLeave (event) {
+    this.setOpen(false)
+  },
+
   handleCalendarClickOutside (event) {
     this.setOpen(false)
   },
 
   handleSelect (date) {
     this.setSelected(date)
-    this.setOpen(false)
+    // this.setOpen(false)
   },
 
   setSelected (date) {
@@ -133,6 +137,7 @@ var DatePicker = React.createClass({
         dateFormat={this.props.dateFormatCalendar}
         selected={this.props.selected}
         onSelect={this.handleSelect}
+        onMouseLeave={this.handleMouseLeave}
         minDate={this.props.minDate}
         maxDate={this.props.maxDate}
         startDate={this.props.startDate}

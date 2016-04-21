@@ -17,6 +17,7 @@ var Calendar = React.createClass({
     maxDate: React.PropTypes.object,
     minDate: React.PropTypes.object,
     onClickOutside: React.PropTypes.func.isRequired,
+    onMouseLeave: React.PropTypes.func,
     onSelect: React.PropTypes.func.isRequired,
     selected: React.PropTypes.object,
     showYearDropdown: React.PropTypes.bool,
@@ -38,6 +39,18 @@ var Calendar = React.createClass({
         date: this.localizeMoment(nextProps.selected)
       })
     }
+  },
+
+  handleMouseEnter (event) {
+    if (this.timer) {
+      clearTimeout(this.timer)
+    }
+  },
+
+  handleMouseLeave (event) {
+    this.timer = setTimeout(() => {
+      this.props.onMouseLeave(event)
+    }, 750)
   },
 
   handleClickOutside (event) {
@@ -152,7 +165,7 @@ var Calendar = React.createClass({
 
   render () {
     return (
-      <div className="react-datepicker">
+      <div className="react-datepicker" onMouseLeave={this.handleMouseLeave} onMouseEnter={this.handleMouseEnter}>
         <div className="react-datepicker__triangle"></div>
         <div className="react-datepicker__header">
           {this.renderPreviousMonthButton()}
